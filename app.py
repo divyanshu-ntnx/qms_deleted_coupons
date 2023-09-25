@@ -61,11 +61,13 @@ def find_deleted_coupons():
 
 @app.route('/deleted_coupons')
 def _deleted_coupons():
+    deleted_coupons = []
     find_deleted_coupons()
     return deleted_coupons
 
 @dc.route('/zero_usage')
 def zero_usage_deleted_coupons():
+    deleted_coupons = []
     find_deleted_coupons()
     report = []
 
@@ -77,6 +79,7 @@ def zero_usage_deleted_coupons():
 
 @dc.route('/non_zero_usage')
 def non_zero_usage_deleted_coupons():
+    deleted_coupons = []
     find_deleted_coupons()
     report = []
 
