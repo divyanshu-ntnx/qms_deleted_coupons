@@ -24,9 +24,9 @@ coupons_collection = qms_db['coupons']
 def index():
     return jsonify({"detail": "Not found"})
 
-deleted_coupons = []
 
 def find_deleted_coupons():
+    deleted_coupons = []
     coupons = []
     users = list(users_collection.find({"coupon_usage": {"$exists": True}},{"username": 1,"coupon_usage":1, "_id":0}))
     for user in users:
@@ -58,17 +58,17 @@ def find_deleted_coupons():
         if coupon["coupon_name"] not in active_coupons:
             deleted_coupons.append(coupon)
 
+    return deleted_coupons
+
 
 @app.route('/deleted_coupons')
 def _deleted_coupons():
-    deleted_coupons = []
-    find_deleted_coupons()
-    return deleted_coupons
+    return find_deleted_coupons()
 
 @dc.route('/zero_usage')
 def zero_usage_deleted_coupons():
-    deleted_coupons = []
-    find_deleted_coupons()
+    deleted_coupons = find_deleted_coupons()
+    
     report = []
 
     for coupon in deleted_coupons:
@@ -79,8 +79,8 @@ def zero_usage_deleted_coupons():
 
 @dc.route('/non_zero_usage')
 def non_zero_usage_deleted_coupons():
-    deleted_coupons = []
-    find_deleted_coupons()
+    deleted_coupons = find_deleted_coupons()
+    
     report = []
 
     for coupon in deleted_coupons:
